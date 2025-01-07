@@ -33,6 +33,12 @@ const UserForm = ({ onSubmit, initialData = { nisn: "", nama: "", kelas: "" }, o
         </label>
         <input type="text" id="kelas" name="kelas" value={formData.kelas} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" required />
       </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="kelas">
+          Password
+        </label>
+        <input type="password" id="password" name="password" value={formData.Password} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" required />
+      </div>
       <div className="flex justify-end space-x-4">
         <button type="button" onClick={onCancel} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300">
           Batal

@@ -8,11 +8,11 @@ import NavbarDashboard from "../Component/NavbarDashboard";
 const Siswa = () => {
   // Data dummy siswa
   const siswaData = [
-    { id: 1, nisn: 1122, nama: "Andi Pratama", kelas: "10 IPA 1", status: "Aktif" },
-    { id: 2, nisn: 1122, nama: "Budi Santoso", kelas: "10 IPA 2", status: "Aktif" },
-    { id: 3, nisn: 1122, nama: "Citra Dewi", kelas: "11 IPS 1", status: "Tidak Aktif" },
-    { id: 4, nisn: 1122, nama: "Dewi Lestari", kelas: "12 IPA 1", status: "Aktif" },
-    { id: 5, nisn: 1122, nama: "Eko Prasetyo", kelas: "12 IPS 2", status: "Aktif" },
+    { id: 1, nisn: 1122, nama: "Andi Pratama", kelas: "10 IPA 1", Password: "Aktif" },
+    { id: 2, nisn: 1122, nama: "Budi Santoso", kelas: "10 IPA 2", Password: "Aktif" },
+    { id: 3, nisn: 1122, nama: "Citra Dewi", kelas: "11 IPS 1", Password: "Tidak Aktif" },
+    { id: 4, nisn: 1122, nama: "Dewi Lestari", kelas: "12 IPA 1", Password: "Aktif" },
+    { id: 5, nisn: 1122, nama: "Eko Prasetyo", kelas: "12 IPS 2", Password: "Aktif" },
   ];
 
   // State untuk manajemen siswa
