@@ -12,11 +12,6 @@ const Sidebar = () => {
 
   return (
     <div className="flex">
-      <div className="flex z-50">
-          <button onClick={toggleSidebar} className="p-2 bg-purple-600 text-white">
-            <FontAwesomeIcon icon={isOpen ? faArrowLeft : faArrowRight} />
-          </button>
-        </div>
       <aside className={`${isOpen ? "w-64" : "w-0"} text-white bg-gradient-to-r from-purple-600 to-blue-500 min-h-screen shadow-lg transition-all duration-300 overflow-hidden`}>
  
         <div className="p-4">
@@ -50,6 +45,11 @@ const Sidebar = () => {
           </nav>
         </div>
       </aside>
+      <div className="flex z-50">
+          <button onClick={toggleSidebar} className="p-2 bg-blue-500 text-white">
+            <FontAwesomeIcon icon={isOpen ? faArrowLeft : faArrowRight} />
+          </button>
+        </div>
     </div>
   );
 };
