@@ -41,7 +41,7 @@ const UserList = ({ users, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg w-[60%] shadow-lg">
+    <div className="bg-white p-6 rounded-lg lg:w-[60%] shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Daftar Siswa</h2>
 
       {/* Pencarian dan Sorting */}

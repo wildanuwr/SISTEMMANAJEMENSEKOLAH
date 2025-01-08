@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import UserList from "./Componen/UserList";
-import UserForm from "./Componen/UserForm";
-import BulkUpload from "./Componen/BulkUpload";
+import UserList from "./ComponenSiswa/UserList";
+import UserForm from "./ComponenSiswa/UserForm";
+import BulkUpload from "./ComponenSiswa/BulkUpload";
 import Sidebar from "../Component/Sidebar";
 import NavbarDashboard from "../Component/NavbarDashboard";
 

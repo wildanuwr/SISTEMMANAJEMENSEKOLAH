@@ -8,6 +8,7 @@ import About from "./Layout/Tentang";
 import Contact from "./Layout/Kontak";
 import Login from "./Layout/Login";
 import Register from "./Layout/Register";
+import Guru from "./Dashboard/Guru";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         </Route>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/siswa" element={<Siswa />} />
+        <Route path="/dashboard/guru" element={<Guru />} />
         {/* Tambahkan route lainnya di sini */}
       </Routes>
     </Router>

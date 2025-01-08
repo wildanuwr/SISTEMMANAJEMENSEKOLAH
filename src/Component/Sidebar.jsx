@@ -13,7 +13,6 @@ const Sidebar = () => {
   return (
     <div className="flex">
       <aside className={`${isOpen ? "w-64" : "w-0"} text-white bg-gradient-to-r from-purple-600 to-blue-500 min-h-screen shadow-lg transition-all duration-300 overflow-hidden`}>
- 
         <div className="p-4">
           <nav className="mt-4">
             <ul>
@@ -22,34 +21,34 @@ const Sidebar = () => {
                   Beranda
                 </Link>
               </li>
-              <hr/>
+              <hr />
               <li>
                 <Link to="/dashboard/siswa" className="block py-4 px-4 text-white  hover:bg-purple-600 hover:text-white rounded transition duration-300">
                   Manajemen Siswa
                 </Link>
               </li>
-              <hr/>
+              <hr />
               <li>
                 <Link to="/dashboard/guru" className="block py-4 px-4 text-white hover:bg-purple-600 hover:text-white rounded transition duration-300">
                   Manajemen Guru
                 </Link>
               </li>
-              <hr/>
+              <hr />
               <li>
                 <Link to="/dashboard/laporan" className="block py-4 px-4 text-white hover:bg-purple-600 hover:text-white rounded transition duration-300">
                   Laporan
                 </Link>
               </li>
-              <hr/>
+              <hr />
             </ul>
           </nav>
         </div>
       </aside>
       <div className="flex z-50">
-          <button onClick={toggleSidebar} className="p-2 bg-blue-500 text-white">
-            <FontAwesomeIcon icon={isOpen ? faArrowLeft : faArrowRight} />
-          </button>
-        </div>
+        <button onClick={toggleSidebar} className="p-2 bg-blue-500 text-white">
+          <FontAwesomeIcon icon={isOpen ? faArrowLeft : faArrowRight} />
+        </button>
+      </div>
     </div>
   );
 };
