@@ -9,6 +9,7 @@ import Contact from "./Layout/Kontak";
 import Login from "./Layout/Login";
 import Register from "./Layout/Register";
 import Guru from "./Dashboard/Guru";
+import Pembayaran from "./Dashboard/Pembayaran";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/siswa" element={<Siswa />} />
         <Route path="/dashboard/guru" element={<Guru />} />
+        <Route path="/dashboard/Pembayaran" element={<Pembayaran />} />
         {/* Tambahkan route lainnya di sini */}
       </Routes>
     </Router>

@@ -7,21 +7,20 @@ const menuData = [
   {
     label: "Dashboard",
     icon: AiOutlineHome,
-    to: "/",
+    to: "/dashboard",
   },
   {
     label: "Kegiatan",
     icon: FiBookOpen,
-    to: "/kegiatan",
     subMenu: [
       { label: "Kegiatan 1", to: "/kegiatan/1" },
       { label: "Kegiatan 2", to: "/kegiatan/2" },
     ],
   },
   {
-    label: "Pembayaran",
+    label: "Pembayaran", 
     icon: AiOutlineAppstore,
-    to: "/pembayaran",
+    to: "/dashboard/Pembayaran",
     subMenu: [
       { label: "Transaksi", to: "/pembayaran/transaksi" },
       { label: "Tagihan", to: "/pembayaran/tagihan" },
@@ -30,7 +29,6 @@ const menuData = [
   {
     label: "Manajemen Akun",
     icon: AiOutlineUser,
-    to: "/manajemen-akun",
     subMenu: [
       { label: "Guru/Tendik", to: "/dashboard/guru" },
       { label: "Siswa", to: "/dashboard/siswa" },
@@ -72,17 +70,24 @@ const MenuItem = ({ menu, isOpen }) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
   const toggleSubMenu = () => {
-    setIsSubMenuOpen(!isSubMenuOpen);
+    if (!menu.to) {
+      setIsSubMenuOpen(!isSubMenuOpen);
+    }
   };
 
   return (
     <>
-      <li className="flex items-center p-4 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white" onClick={menu.subMenu ? toggleSubMenu : null}>
-        <menu.icon className="w-6 h-6" aria-hidden="true" />
-        {isOpen && (
-          <Link to={menu.to} className="ml-4 text-white">
-            {menu.label}
+      <li className="flex items-center p-4 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+        {menu.to ? (
+          <Link to={menu.to} className="flex items-center w-full">
+            <menu.icon className="w-6 h-6" aria-hidden="true" />
+            {isOpen && <span className="ml-4">{menu.label}</span>}
           </Link>
+        ) : (
+          <button onClick={toggleSubMenu} className="flex items-center w-full">
+            <menu.icon className="w-6 h-6" aria-hidden="true" />
+            {isOpen && <span className="ml-4">{menu.label}</span>}
+          </button>
         )}
       </li>
       {menu.subMenu && isSubMenuOpen && isOpen && (
