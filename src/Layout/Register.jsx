@@ -3,37 +3,67 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Daftar</h2>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 text-sm font-semibold mb-2">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+      <div className="bg-white/10 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/20 w-full max-w-md relative animate-fade-in">
+        <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 mb-8 text-center">
+          Buat Akun Baru
+        </h2>
+        <form className="space-y-6">
+          <div className="group">
+            <label htmlFor="name" className="block text-gray-200 text-sm font-medium mb-2">
               Nama Lengkap
             </label>
-            <input type="text" id="name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Masukkan nama lengkap Anda" required />
+            <div className="relative">
+              <input 
+                type="text" 
+                id="name" 
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                placeholder="Masukkan nama lengkap"
+                required 
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">
+          <div className="group">
+            <label htmlFor="email" className="block text-gray-200 text-sm font-medium mb-2">
               Email
             </label>
-            <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Masukkan email Anda" required />
+            <div className="relative">
+              <input 
+                type="email" 
+                id="email" 
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                placeholder="nama@email.com"
+                required 
+              />
+            </div>
           </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">
+          <div className="group">
+            <label htmlFor="password" className="block text-gray-200 text-sm font-medium mb-2">
               Kata Sandi
             </label>
-            <input type="password" id="password" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Masukkan kata sandi Anda" required />
+            <div className="relative">
+              <input 
+                type="password" 
+                id="password" 
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                placeholder="••••••••"
+                required 
+              />
+            </div>
           </div>
-          <button type="submit" className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-purple-700 transition duration-300">
-            Daftar
+          <button 
+            type="submit" 
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
+          >
+            Daftar Sekarang
           </button>
         </form>
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
+        <div className="mt-8 text-center">
+          <p className="text-gray-300">
             Sudah punya akun?{" "}
-            <Link to="/login" className="text-purple-600 hover:underline">
-              Masuk di sini
+            <Link to="/login" className="text-purple-300 hover:text-white transition-colors duration-300">
+              Masuk
             </Link>
           </p>
         </div>

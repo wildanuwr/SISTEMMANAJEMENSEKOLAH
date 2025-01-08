@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const RecentPayments = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,19 +10,22 @@ const RecentPayments = () => {
       nama: 'John Doe',
       jenis: 'SPP',
       jumlah: 'Rp 500.000',
-      status: 'Lunas'
+      status: 'Lunas',
+      tanggal: '2024-01-15'
     },
     {
       nama: 'Jane Smith', 
       jenis: 'Tabungan',
       jumlah: 'Rp 250.000',
-      status: 'Lunas'
+      status: 'Lunas',
+      tanggal: '2024-01-14'
     },
     {
       nama: 'Mike Johnson',
       jenis: 'SPP',
       jumlah: 'Rp 500.000', 
-      status: 'Lunas'
+      status: 'Lunas',
+      tanggal: '2024-01-13'
     }
   ];
 
@@ -30,69 +34,93 @@ const RecentPayments = () => {
     return payment.nama.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  // Handle perubahan input pencarian
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
-
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-6">
-        <h2 className="text-lg font-semibold text-gray-900">Pembayaran Terbaru</h2>
-        <div className="mt-4">  
-          <div className="mb-4">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-100"
+    >
+      <div className="p-8">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+          Pembayaran Terbaru
+        </h2>
+        
+        <div className="mt-6">  
+          <div className="relative mb-6">
             <input
               type="text"
-              placeholder="Cari berdasarkan nama atau NISN..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Cari pembayaran..."
+              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-600 transition-all duration-300"
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Siswa
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Jenis
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Jumlah
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredPayments.map((payment, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="text-sm font-medium text-gray-900">
-                        {payment.nama}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{payment.jenis}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{payment.jumlah}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      {payment.status}
-                    </span>
-                  </td>
+
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    Siswa
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    Jenis
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    Jumlah
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    Tanggal
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    Status
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {filteredPayments.map((payment, index) => (
+                  <motion.tr 
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-medium">
+                          {payment.nama.charAt(0)}
+                        </div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {payment.nama}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-600">{payment.jenis}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm font-semibold text-gray-900">{payment.jumlah}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-600">{payment.tanggal}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800">
+                        {payment.status}
+                      </span>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
