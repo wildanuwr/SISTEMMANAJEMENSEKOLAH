@@ -43,7 +43,7 @@ const Guru = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Manajemen Guru</h1>
           <div className="container mx-auto p-6">
             <BulkUploadGuru />
-            <div className="lg:flex py-3 gap-3">
+            <div className="lg:flex py-3 gap-3 z-0">
               <GuruForm onSubmit={addGuru} />
               <GuruList gurus={gurus} onEdit={editGuru} onDelete={deleteGuru} />
             </div>

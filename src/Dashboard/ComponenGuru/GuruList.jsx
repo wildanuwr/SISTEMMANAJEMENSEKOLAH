@@ -46,7 +46,7 @@ const GuruList = ({ gurus, onEdit, onDelete }) => {
 
       {/* Pencarian dan Sorting */}
       <div className="flex justify-between items-center mb-4">
-        <input type="text" placeholder="Cari nama atau kelas..." value={search} onChange={handleSearch} className="p-2 border border-gray-300 rounded-lg w-[70%]" />
+        <input type="text" placeholder="Cari nama atau Mapel..." value={search} onChange={handleSearch} className="p-2 border border-gray-300 rounded-lg w-[70%]" />
         <button onClick={handleSort} className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
           Urutkan Kelas ({sortOrder === "asc" ? "A-Z" : "Z-A"})
         </button>

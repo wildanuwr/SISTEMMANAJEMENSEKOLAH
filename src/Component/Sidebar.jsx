@@ -1,55 +1,102 @@
 import React, { useState } from "react";
+import { AiOutlineHome, AiOutlineAppstore, AiOutlineTags, AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"; // Import ikon yang dibutuhkan
+import { FiBookOpen } from "react-icons/fi";
+
+const menuData = [
+  {
+    label: "Dashboard",
+    icon: AiOutlineHome,
+    to: "/",
+  },
+  {
+    label: "Kegiatan",
+    icon: FiBookOpen,
+    to: "/kegiatan",
+    subMenu: [
+      { label: "Kegiatan 1", to: "/kegiatan/1" },
+      { label: "Kegiatan 2", to: "/kegiatan/2" },
+    ],
+  },
+  {
+    label: "Pembayaran",
+    icon: AiOutlineAppstore,
+    to: "/pembayaran",
+    subMenu: [
+      { label: "Transaksi", to: "/pembayaran/transaksi" },
+      { label: "Tagihan", to: "/pembayaran/tagihan" },
+    ],
+  },
+  {
+    label: "Manajemen Akun",
+    icon: AiOutlineUser,
+    to: "/manajemen-akun",
+    subMenu: [
+      { label: "Guru/Tendik", to: "/dashboard/guru" },
+      { label: "Siswa", to: "/dashboard/siswa" },
+    ],
+  },
+  {
+    label: "Laporan",
+    icon: AiOutlineUser,
+    to: "/laporan",
+  },
+];
 
 const Sidebar = () => {
-  // State untuk mengatur apakah sidebar terbuka atau tertutup
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Fungsi untuk toggle status sidebar
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <div className="flex">
-      <aside className={`${isOpen ? "w-64" : "w-0"} text-white bg-gradient-to-r from-purple-600 to-blue-500 min-h-screen shadow-lg transition-all duration-300 overflow-hidden`}>
-        <div className="p-4">
-          <nav className="mt-4">
-            <ul>
-              <li>
-                <Link to="/dashboard" className="block py-4 px-4 text-white hover:bg-purple-600 hover:text-white rounded transition duration-300">
-                  Beranda
-                </Link>
-              </li>
-              <hr />
-              <li>
-                <Link to="/dashboard/siswa" className="block py-4 px-4 text-white  hover:bg-purple-600 hover:text-white rounded transition duration-300">
-                  Manajemen Siswa
-                </Link>
-              </li>
-              <hr />
-              <li>
-                <Link to="/dashboard/guru" className="block py-4 px-4 text-white hover:bg-purple-600 hover:text-white rounded transition duration-300">
-                  Manajemen Guru
-                </Link>
-              </li>
-              <hr />
-              <li>
-                <Link to="/dashboard/laporan" className="block py-4 px-4 text-white hover:bg-purple-600 hover:text-white rounded transition duration-300">
-                  Laporan
-                </Link>
-              </li>
-              <hr />
-            </ul>
-          </nav>
-        </div>
-      </aside>
-      <div className="flex z-50">
-        <button onClick={toggleSidebar} className="p-2 bg-blue-500 text-white">
-          <FontAwesomeIcon icon={isOpen ? faArrowLeft : faArrowRight} />
-        </button>
-      </div>
+    <div className={`flex flex-col h-screen bg-gradient-to-r from-sky-700 to-purple-700 text-white ${isOpen ? "w-64" : "w-16"} transition-width duration-300`}>
+      <button className="p-4 focus:outline-none focus:ring-2 focus:ring-white" onClick={toggleSidebar} aria-label="Toggle sidebar">
+        <div className="w-6 h-0.5 bg-white mb-1"></div>
+        <div className="w-6 h-0.5 bg-white mb-1"></div>
+        <div className="w-6 h-0.5 bg-white"></div>
+      </button>
+      <nav className="flex-1 mt-10">
+        <ul>
+          {menuData.map((menu, index) => (
+            <MenuItem key={index} menu={menu} isOpen={isOpen} />
+          ))}
+        </ul>
+      </nav>
     </div>
+  );
+};
+
+const MenuItem = ({ menu, isOpen }) => {
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+
+  const toggleSubMenu = () => {
+    setIsSubMenuOpen(!isSubMenuOpen);
+  };
+
+  return (
+    <>
+      <li className="flex items-center p-4 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white" onClick={menu.subMenu ? toggleSubMenu : null}>
+        <menu.icon className="w-6 h-6" aria-hidden="true" />
+        {isOpen && (
+          <Link to={menu.to} className="ml-4 text-white">
+            {menu.label}
+          </Link>
+        )}
+      </li>
+      {menu.subMenu && isSubMenuOpen && isOpen && (
+        <ul className="ml-8">
+          {menu.subMenu.map((subMenuItem, index) => (
+            <li key={index} className="flex items-center p-2 hover:bg-gray-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+              <Link to={subMenuItem.to} className="ml-4 text-white">
+                {subMenuItem.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 
