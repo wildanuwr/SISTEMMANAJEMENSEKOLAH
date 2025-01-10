@@ -10,7 +10,7 @@ import Login from "./Layout/Login";
 import Register from "./Layout/Register";
 import Guru from "./Dashboard/Guru";
 import Pembayaran from "./Dashboard/Pembayaran";
-
+import KegiatanDashboard from "./Dashboard/Kegiatan";
 const App = () => {
   return (
     <Router>
@@ -27,6 +27,7 @@ const App = () => {
         <Route path="/dashboard/siswa" element={<Siswa />} />
         <Route path="/dashboard/guru" element={<Guru />} />
         <Route path="/dashboard/Pembayaran" element={<Pembayaran />} />
+        <Route path="/dashboard/kegiatan" element={<KegiatanDashboard />} />
         {/* Tambahkan route lainnya di sini */}
       </Routes>
     </Router>

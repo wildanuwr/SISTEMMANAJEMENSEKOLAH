@@ -33,6 +33,7 @@ const menuData = [
     subMenu: [
       { label: "Guru/Tendik", to: "/dashboard/guru" },
       { label: "Siswa", to: "/dashboard/siswa" },
+      { label: "Pengaturan Kelas", to: "/dashboard/pengaturan-kelas" }, // Menambahkan Pengaturan Kelas
     ],
   },
   {

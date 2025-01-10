@@ -1,55 +1,203 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../Component/Sidebar";
 import NavbarDashboard from "../Component/NavbarDashboard";
+import profilePicture from "../assets/wildanu.jpg"; // Mengimpor foto dari aset
+import postImage from "../assets/wildanu.jpg"; // Mengimpor foto untuk postingan baru
+import { AiOutlineUpload } from "react-icons/ai"; // Mengimpor ikon upload
+import { Editor } from '@tinymce/tinymce-react'; // Mengimpor TinyMCE Editor
+
 const Dashboard = () => {
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      user: {
+        name: "Ahmad Wildanu Wahyu Ramadhan",
+        profilePicture: profilePicture, // Menggunakan foto yang diimpor
+      },
+      description: "Apa yang kalian ketahui tentang pentingnya pendidikan karakter di sekolah?",
+      likes: 0,
+      comments: [
+        { text: "Pendidikan karakter sangat penting untuk membentuk kepribadian siswa.", user: { name: "User1", profilePicture: profilePicture } },
+        { text: "Saya setuju, itu membantu siswa menjadi lebih bertanggung jawab.", user: { name: "User2", profilePicture: profilePicture } },
+      ],
+    },
+    {
+      id: 2,
+      user: {
+        name: "Jane Smith",
+        profilePicture: profilePicture, // Menggunakan foto yang diimpor
+      },
+      description: "Mengapa kita perlu belajar matematika dalam kehidupan sehari-hari?",
+      likes: 0,
+      comments: [
+        { text: "Matematika membantu kita dalam pengambilan keputusan yang logis.", user: { name: "User3", profilePicture: profilePicture } },
+        { text: "Kita sering menggunakan matematika tanpa kita sadari, seperti saat berbelanja.", user: { name: "User4", profilePicture: profilePicture } },
+      ],
+    },
+    {
+      id: 3,
+      user: {
+        name: "Michael Johnson",
+        profilePicture: profilePicture, // Menggunakan foto yang diimpor
+      },
+      description: "Apa manfaat membaca buku bagi siswa?",
+      likes: 0,
+      comments: [
+        { text: "Membaca buku dapat meningkatkan pengetahuan dan imajinasi.", user: { name: "User5", profilePicture: profilePicture } },
+        { text: "Buku juga membantu kita memahami berbagai perspektif.", user: { name: "User6", profilePicture: profilePicture } },
+      ],
+    },
+    {
+      id: 4, // Postingan baru
+      user: {
+        name: "Alice Johnson",
+        profilePicture: profilePicture, // Menggunakan foto yang diimpor
+      },
+      description: "Belajar bahasa asing sangat bermanfaat untuk karir.",
+      likes: 0,
+      comments: [],
+      image: postImage, // Menambahkan gambar untuk postingan baru dengan desain yang menarik
+    },
+  ]);
+
+  const [newPost, setNewPost] = useState(""); // State untuk inputan postingan baru
+  const [newPostImage, setNewPostImage] = useState(null); // State untuk gambar/video postingan baru
+
+  const handleLike = (id) => {
+    setPosts(posts.map(post => post.id === id ? { ...post, likes: post.likes + 1 } : post));
+  };
+
+  const handleComment = (id, comment) => {
+    setPosts(posts.map(post => post.id === id ? { ...post, comments: [...post.comments, { text: comment, user: { name: "User7", profilePicture: profilePicture } }] } : post));
+  };
+
+  const handlePostSubmit = (e) => {
+    e.preventDefault();
+    if (newPost) {
+      const newPostData = {
+        id: posts.length + 1,
+        user: {
+          name: "Anda",
+          profilePicture: profilePicture,
+        },
+        description: newPost,
+        likes: 0,
+        comments: [],
+        image: newPostImage, // Menambahkan gambar/video ke postingan baru
+      };
+      setPosts([newPostData, ...posts]);
+      setNewPost(""); // Reset input setelah posting
+      setNewPostImage(null); // Reset gambar/video setelah posting
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
       <NavbarDashboard />
       <div className="flex">
         <Sidebar />
         {/* Content Area */}
         <main className="flex-1 p-8">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">
-              Selamat Datang, John Doe! 👋
+            <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+              Selamat Datang, Ahmad Wildanu Wahyu Ramadhan! 👋
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Card 1 */}
-              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800">Jumlah Siswa</h2>
-                  <div className="p-3 bg-purple-100 rounded-xl group-hover:bg-purple-200 transition-colors duration-300">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
+            <div className="mb-6 p-4 bg-white rounded-lg shadow-md">
+              <form onSubmit={handlePostSubmit} className="flex items-start">
+                <img src={profilePicture} alt="Profile" className="h-10 w-10 rounded-full mr-4" />
+                <div className="flex-1">
+                  <Editor
+                    initialValue="<p>Tulis postingan baru...</p>"
+                    init={{
+                      height: 200,
+                      menubar: false,
+                      plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                      ],
+                      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
+                    }}
+                    onEditorChange={(content) => setNewPost(content)}
+                    required
+                  />
+                  <label className="flex items-center mt-2 cursor-pointer">
+                    <AiOutlineUpload className="text-gray-500 mr-2" size={24} />
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      onChange={(e) => setNewPostImage(URL.createObjectURL(e.target.files[0]))}
+                      className="hidden"
+                    />
+                    <span className="text-blue-500">Upload Foto/Video</span>
+                  </label>
+                  {newPostImage && (
+                    <div className="mb-4">
+                      <img src={newPostImage} alt="Preview" className="rounded-lg w-1/3 h-auto" />
+                    </div>
+                  )}
+                </div>
+                <button type="submit" className="ml-4 bg-blue-500 text-white rounded-lg px-4 py-2">
+                  Kirim Postingan
+                </button>
+              </form>
+            </div>
+            <div className="space-y-6">
+              {posts.map(post => (
+                <div key={post.id} className="bg-white rounded-lg shadow-lg p-6 border border-gray-300 transition-transform transform hover:scale-105">
+                  <div className="flex items-center mb-4">
+                    <img src={post.user.profilePicture} alt={`${post.user.name}'s profile`} className="h-10 w-10 rounded-full mr-4" />
+                    <p className="text-lg font-semibold text-gray-800">{post.user.name}</p>
+                  </div>
+                  <div dangerouslySetInnerHTML={{ __html: post.description }} className="text-gray-600 mb-4" />
+                  {post.image && <div className="flex justify-center mb-4"><img src={post.image} alt="Post" className="rounded-lg w-1/3 h-auto" /></div>} {/* Menampilkan gambar jika ada */}
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <button onClick={() => handleLike(post.id)} className="text-blue-500 hover:text-blue-600 mr-4">
+                        👍 {post.likes} Like
+                      </button>
+                      <button className="text-blue-500 hover:text-blue-600">
+                        🔄 Share
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex">
+                    <input
+                      type="text"
+                      placeholder="Tulis komentar..."
+                      className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && e.target.value) {
+                          handleComment(post.id, e.target.value);
+                          e.target.value = '';
+                        }
+                      }}
+                    />
+                    <button 
+                      onClick={() => {
+                        const input = document.querySelector(`input[placeholder="Tulis komentar..."]`);
+                        if (input.value) {
+                          handleComment(post.id, input.value);
+                          input.value = '';
+                        }
+                      }} 
+                      className="ml-2 bg-blue-500 text-white rounded-lg px-4 py-2">
+                      Kirim
+                    </button>
+                  </div>
+                  <div className="mt-2 space-y-2">
+                    {post.comments.map((comment, index) => (
+                      <div key={index} className="bg-gray-100 p-2 rounded-lg flex items-center">
+                        <img src={comment.user.profilePicture} alt={`${comment.user.name}'s profile`} className="h-8 w-8 rounded-full mr-2" />
+                        <div>
+                          <p className="font-semibold">{comment.user.name}</p>
+                          <p className="text-gray-600 text-sm">{comment.text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <p className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">250</p>
-              </div>
-              {/* Card 2 */}
-              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800">Jumlah Guru</h2>
-                  <div className="p-3 bg-pink-100 rounded-xl group-hover:bg-pink-200 transition-colors duration-300">
-                    <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">30</p>
-              </div>
-              {/* Card 3 */}
-              <div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800">Laporan Terbaru</h2>
-                  <div className="p-3 bg-indigo-100 rounded-xl group-hover:bg-indigo-200 transition-colors duration-300">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">5</p>
-              </div>
+              ))}
             </div>
           </div>
         </main>
