@@ -17,8 +17,8 @@ const Dashboard = () => {
       description: "Apa yang kalian ketahui tentang pentingnya pendidikan karakter di sekolah?",
       likes: 0,
       comments: [
-        { text: "Pendidikan karakter sangat penting untuk membentuk kepribadian siswa.", user: { name: "User1", profilePicture: profilePicture } },
-        { text: "Saya setuju, itu membantu siswa menjadi lebih bertanggung jawab.", user: { name: "User2", profilePicture: profilePicture } },
+        { text: "Pendidikan karakter sangat penting untuk membentuk kepribadian siswa.", user: { name: "User1", profilePicture: profilePicture }, replies: [], likes: 0 },
+        { text: "Saya setuju, itu membantu siswa menjadi lebih bertanggung jawab.", user: { name: "User2", profilePicture: profilePicture }, replies: [], likes: 0 },
       ],
     },
     {
@@ -30,8 +30,8 @@ const Dashboard = () => {
       description: "Mengapa kita perlu belajar matematika dalam kehidupan sehari-hari?",
       likes: 0,
       comments: [
-        { text: "Matematika membantu kita dalam pengambilan keputusan yang logis.", user: { name: "User3", profilePicture: profilePicture } },
-        { text: "Kita sering menggunakan matematika tanpa kita sadari, seperti saat berbelanja.", user: { name: "User4", profilePicture: profilePicture } },
+        { text: "Matematika membantu kita dalam pengambilan keputusan yang logis.", user: { name: "User3", profilePicture: profilePicture }, replies: [], likes: 0 },
+        { text: "Kita sering menggunakan matematika tanpa kita sadari, seperti saat berbelanja.", user: { name: "User4", profilePicture: profilePicture }, replies: [], likes: 0 },
       ],
     },
     {
@@ -43,8 +43,8 @@ const Dashboard = () => {
       description: "Apa manfaat membaca buku bagi siswa?",
       likes: 0,
       comments: [
-        { text: "Membaca buku dapat meningkatkan pengetahuan dan imajinasi.", user: { name: "User5", profilePicture: profilePicture } },
-        { text: "Buku juga membantu kita memahami berbagai perspektif.", user: { name: "User6", profilePicture: profilePicture } },
+        { text: "Membaca buku dapat meningkatkan pengetahuan dan imajinasi.", user: { name: "User5", profilePicture: profilePicture }, replies: [], likes: 0 },
+        { text: "Buku juga membantu kita memahami berbagai perspektif.", user: { name: "User6", profilePicture: profilePicture }, replies: [], likes: 0 },
       ],
     },
     {
@@ -68,7 +68,18 @@ const Dashboard = () => {
   };
 
   const handleComment = (id, comment) => {
-    setPosts(posts.map(post => post.id === id ? { ...post, comments: [...post.comments, { text: comment, user: { name: "User7", profilePicture: profilePicture } }] } : post));
+    setPosts(posts.map(post => post.id === id ? { ...post, comments: [...post.comments, { text: comment, user: { name: "User7", profilePicture: profilePicture }, replies: [], likes: 0 }] } : post));
+  };
+
+  const handleReply = (postId, commentIndex, reply) => {
+    setPosts(posts.map(post => {
+      if (post.id === postId) {
+        const updatedComments = [...post.comments];
+        updatedComments[commentIndex].replies.push({ text: reply, user: { name: "User8", profilePicture: profilePicture }, likes: 0 });
+        return { ...post, comments: updatedComments };
+      }
+      return post;
+    }));
   };
 
   const handlePostSubmit = (e) => {
@@ -186,12 +197,74 @@ const Dashboard = () => {
                     </button>
                   </div>
                   <div className="mt-2 space-y-2">
-                    {post.comments.map((comment, index) => (
-                      <div key={index} className="bg-gray-100 p-2 rounded-lg flex items-center">
-                        <img src={comment.user.profilePicture} alt={`${comment.user.name}'s profile`} className="h-8 w-8 rounded-full mr-2" />
-                        <div>
-                          <p className="font-semibold">{comment.user.name}</p>
-                          <p className="text-gray-600 text-sm">{comment.text}</p>
+                    {post.comments.map((comment, commentIndex) => (
+                      <div key={commentIndex} className="bg-gray-100 p-2 rounded-lg flex flex-col">
+                        <div className="flex items-center">
+                          <img src={comment.user.profilePicture} alt={`${comment.user.name}'s profile`} className="h-8 w-8 rounded-full mr-2" />
+                          <div>
+                            <p className="font-semibold">{comment.user.name}</p>
+                            <p className="text-gray-600 text-sm">{comment.text}</p>
+                            <div className="flex items-center mt-1">
+                              <button onClick={() => {
+                                const updatedComments = [...post.comments];
+                                updatedComments[commentIndex].likes += 1;
+                                setPosts(posts.map(p => p.id === post.id ? { ...p, comments: updatedComments } : p));
+                              }} className="text-red-500 mr-4">
+                                ❤️ {comment.likes} Like
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  const replyInput = document.querySelector(`#reply-input-${post.id}-${commentIndex}`);
+                                  if (replyInput) {
+                                    replyInput.classList.toggle('hidden');
+                                  }
+                                }} 
+                                className="text-blue-500">Balas</button>
+                            </div>
+                          </div>
+                        </div>
+                        <input 
+                          id={`reply-input-${post.id}-${commentIndex}`} 
+                          type="text" 
+                          placeholder="Tulis balasan..." 
+                          className="border border-gray-300 rounded-lg p-2 w-full mt-2 hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && e.target.value) {
+                              handleReply(post.id, commentIndex, e.target.value);
+                              e.target.value = '';
+                            }
+                          }}
+                        />
+                        <div className="mt-2 space-y-1">
+                          {comment.replies.map((reply, replyIndex) => (
+                            <div key={replyIndex} className="bg-gray-200 p-2 rounded-lg flex items-center">
+                              <img src={reply.user.profilePicture} alt={`${reply.user.name}'s profile`} className="h-6 w-6 rounded-full mr-2" />
+                              <div>
+                                <p className="font-semibold">{reply.user.name}</p>
+                                <p className="text-gray-600 text-sm">{reply.text}</p>
+                                <div className="flex items-center mt-1">
+                                  <button onClick={() => {
+                                    const updatedReplies = [...comment.replies];
+                                    updatedReplies[replyIndex].likes += 1;
+                                    setPosts(posts.map(p => p.id === post.id ? {
+                                      ...p,
+                                      comments: p.comments.map((c, i) => i === commentIndex ? { ...c, replies: updatedReplies } : c)
+                                    } : p));
+                                  }} className="text-red-500 mr-4">
+                                    ❤️ {reply.likes} Like
+                                  </button>
+                                  <button 
+                                    onClick={() => {
+                                      const replyInput = document.querySelector(`#reply-input-${post.id}-${commentIndex}-${replyIndex}`);
+                                      if (replyInput) {
+                                        replyInput.classList.toggle('hidden');
+                                      }
+                                    }} 
+                                    className="text-blue-500">Balas</button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}
